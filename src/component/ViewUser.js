@@ -1,13 +1,31 @@
 import React from "react";
+import { Table } from "react-bootstrap";
+import users from "../data/users.json";
 
 const ViewUser = () => {
-  // Fetch user data from JSON file and display it here
-  // You can use fetch() or axios to fetch the data
-
   return (
     <div>
-      <h1>View Users</h1>
-      {/* Display user data as a list */}
+      <h2>View User</h2>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Birth Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.firstName}</td>
+              <td>{user.lastName}</td>
+              <td>{user.email}</td>
+              <td>{user.birthDate}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };
