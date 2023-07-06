@@ -1,8 +1,8 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import users from "../data/users.json";
+// import users from "../data/users.json";
 
-const ViewUser = () => {
+const ViewUser = ({ users }) => {
   return (
     <div>
       <h2>View User</h2>
@@ -16,7 +16,7 @@ const ViewUser = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {users && users.map((user) => (
             <tr key={user.id}>
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>

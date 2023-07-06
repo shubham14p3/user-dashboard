@@ -1,14 +1,22 @@
 import React from "react";
+import { Modal, Button } from "react-bootstrap";
 
-const Modal = ({ message, onClose }) => {
+const CustomModal = ({ message, onClose }) => {
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <Modal show={true} onHide={onClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal Title</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
         <p>{message}</p>
-        <button onClick={onClose}>Close</button>
-      </div>
-    </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onClose}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
-export default Modal;
+export default CustomModal;
