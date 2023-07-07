@@ -5,15 +5,15 @@ import { Nav, NavItem, Button } from "react-bootstrap";
 const Dashboard = ({ handleLogout, children }) => {
   return (
     <div>
-      <div className="navigation">
-        <Nav className="mr-auto">
+      <div className="navigation bg-primary">
+        <Nav data-bs-theme="dark">
           <NavItem>
-            <Link className="nav-link" to="/dashboard/view-user">
+            <Link className="nav-link text-light" to="/dashboard/view-user">
               View User
             </Link>
           </NavItem>
           <NavItem>
-            <Link className="nav-link" to="/dashboard/create-user">
+            <Link className="nav-link text-light" to="/dashboard/create-user">
               Create User
             </Link>
           </NavItem>
