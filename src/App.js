@@ -11,10 +11,12 @@ import CreateUser from "./component/CreateUser";
 import Login from "./component/Login";
 import Modal from "./component/Modal";
 import users from "./data/users.json";
+import './App.css';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [usersList, setUsersList] = useState(users);
 
@@ -28,6 +30,7 @@ const App = () => {
     if (username === "admin" && password === "pass123") {
       setLoggedIn(true);
     } else {
+      setModalTitle("Warning");
       setModalMessage("Invalid credentials. Please try again.");
       setModalOpen(true);
     }
@@ -71,7 +74,7 @@ const App = () => {
         </Route>
       </Switch>
       {modalOpen && (
-        <Modal message={modalMessage} onClose={() => setModalOpen(false)} />
+        <Modal message={modalMessage} onClose={() => setModalOpen(false)} title={modalTitle} />
       )}
     </Router>
   );

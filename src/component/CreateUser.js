@@ -35,11 +35,13 @@ const CreateUser = ({ onCreateUser }) => {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false); // State to control the modal visibility
   const [modalMessage, setModalMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
   const handleSubmit = (values) => {
     // Perform form validation and create user logic here
     // Display success message in a modal or popup
     onCreateUser(values);
     setModalMessage("Successfully user Created.");
+    setModalTitle("User Created");
     setShowModal(true); // Show the modal after creating the user
   };
 
@@ -144,6 +146,7 @@ const CreateUser = ({ onCreateUser }) => {
         <Modal
           message="User created successfully"
           onClose={handleCloseModal}
+          title={modalTitle}
         />
       )}
     </Container>
