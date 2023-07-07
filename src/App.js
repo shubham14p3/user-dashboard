@@ -11,7 +11,8 @@ import CreateUser from "./component/CreateUser";
 import Login from "./component/Login";
 import Modal from "./component/Modal";
 import users from "./data/users.json";
-import './App.css';
+import NotFound from "./component/NotFound"; // Import the custom NotFound component
+import "./App.css";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -19,6 +20,7 @@ const App = () => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [usersList, setUsersList] = useState(users);
+  const [authenticated, setAuthenticated] = useState(false); // New state variable
 
   const handleCreateUser = (newUser) => {
     const updatedUsersList = [...usersList, newUser];
@@ -29,6 +31,7 @@ const App = () => {
     // Check if username and password match the credentials
     if (username === "admin" && password === "pass123") {
       setLoggedIn(true);
+      setAuthenticated(true); // Set authenticated to true
     } else {
       setModalTitle("Warning");
       setModalMessage("Invalid credentials. Please try again.");
@@ -38,6 +41,7 @@ const App = () => {
 
   const handleLogout = () => {
     setLoggedIn(false);
+    setAuthenticated(false); // Set authenticated to false
     setModalMessage("Logout successful.");
     setModalOpen(true);
   };
@@ -66,15 +70,26 @@ const App = () => {
                   path="/dashboard/create-user"
                   render={() => <CreateUser onCreateUser={handleCreateUser} />}
                 />
+                {/* Add more routes for the dashboard if needed */}
+                <Redirect to="/dashboard" />{" "}
+                {/* Redirect to the default dashboard route if no other routes match */}
               </Switch>
             </Dashboard>
           ) : (
-            <Redirect to="/" />
+            <Redirect to="/404" />
           )}
         </Route>
+        <Route path="/404" component={NotFound} />{" "}
+        {/* Render the NotFound component for the 404 page */}
+        <Redirect to="/404" />{" "}
+        {/* Redirect to the 404 page for any other undefined routes */}
       </Switch>
       {modalOpen && (
-        <Modal message={modalMessage} onClose={() => setModalOpen(false)} title={modalTitle} />
+        <Modal
+          message={modalMessage}
+          onClose={() => setModalOpen(false)}
+          title={modalTitle}
+        />
       )}
     </Router>
   );
