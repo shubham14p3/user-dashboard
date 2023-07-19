@@ -33,16 +33,18 @@ const validationSchema = Yup.object({
 
 const CreateUser = ({ onCreateUser }) => {
   const history = useHistory();
-  const [showModal, setShowModal] = useState(false); // State to control the modal visibility
+  const [showModal, setShowModal] = useState(false); // setting modal visibility as false
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const handleSubmit = (values) => {
-    // Perform form validation and create user logic here
-    // Display success message in a modal or popup
+    // form validation 
+    // Display success message in a modal popup
     onCreateUser(values);
-    setModalMessage("Successfully user Created.");
-    setModalTitle("User Created");
-    setShowModal(true); // Show the modal after creating the user
+    setModalMessage(
+      `Hi ${values.firstName} ${values.lastName}  you have sucessfully registered with following Email: ${values.email} and DOB: ${values.birthDate}  `
+    );
+    setModalTitle("User Created Successfully");
+    setShowModal(true); // open the modal after creating the user
   };
 
   const handleCloseModal = () => {
@@ -134,7 +136,8 @@ const CreateUser = ({ onCreateUser }) => {
                     className="text-danger"
                   />
                 </BootstrapForm.Group>
-                <Button type="submit" variant="primary" disabled={isSubmitting}>
+                
+                <Button  className="user-register-button" type="submit" variant="primary" disabled={isSubmitting}>
                   Create
                 </Button>
               </Form>
@@ -144,9 +147,9 @@ const CreateUser = ({ onCreateUser }) => {
       </Row>
       {showModal && (
         <Modal
-          message="User created successfully"
           onClose={handleCloseModal}
           title={modalTitle}
+          message={modalMessage}
         />
       )}
     </Container>

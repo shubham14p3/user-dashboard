@@ -1,18 +1,14 @@
-import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Dashboard from "./component/Dashboard";
 import ViewUser from "./component/ViewUser";
 import CreateUser from "./component/CreateUser";
 import Login from "./component/Login";
 import Modal from "./component/Modal";
+import DashboardPage from "./component/DashboardPage";
 import users from "./data/users.json";
-import NotFound from "./component/NotFound"; // Import the custom NotFound component
-import "./App.css";
+import NotFound from "./component/NotFound";
+import "./App.scss";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -20,7 +16,27 @@ const App = () => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [usersList, setUsersList] = useState(users);
-  const [authenticated, setAuthenticated] = useState(false); // New state variable
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Load users list from local storage on component mount
+    const storedUsersList = localStorage.getItem("usersList");
+    if (storedUsersList) {
+      setUsersList(JSON.parse(storedUsersList));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save users list to local storage whenever new user is added
+    localStorage.setItem("usersList", JSON.stringify(usersList));
+  }, [usersList]);
+
+  // New useEffect to watch for changes in the users.json file
+  useEffect(() => {
+    // Update the usersList when the users data changes
+    setUsersList(users);
+    localStorage.setItem("usersList", JSON.stringify(users));
+  }, [users]);
 
   const handleCreateUser = (newUser) => {
     const updatedUsersList = [...usersList, newUser];
@@ -28,10 +44,10 @@ const App = () => {
   };
 
   const handleLogin = (username, password) => {
-    // Check if username and password match the credentials
+    // Checking if username and password are correct
     if (username === "admin" && password === "pass123") {
       setLoggedIn(true);
-      setAuthenticated(true); // Set authenticated to true
+      setAuthenticated(true); // Successfully login if true credentials
     } else {
       setModalTitle("Warning");
       setModalMessage("Invalid credentials. Please try again.");
@@ -41,20 +57,17 @@ const App = () => {
 
   const handleLogout = () => {
     setLoggedIn(false);
-    setAuthenticated(false); // Set authenticated to false
+    setAuthenticated(false);
+    setModalTitle("Logout");
     setModalMessage("Logout successful.");
-    setModalOpen(true);
+    setModalOpen(true); // Opening modal if logout successfully
   };
 
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          {loggedIn ? (
-            <Redirect to="/dashboard" />
-          ) : (
-            <Login handleLogin={handleLogin} />
-          )}
+          {loggedIn ? <Redirect to="/dashboard" /> : <Login handleLogin={handleLogin} />}
         </Route>
         <Route path="/dashboard">
           {loggedIn ? (
@@ -70,19 +83,17 @@ const App = () => {
                   path="/dashboard/create-user"
                   render={() => <CreateUser onCreateUser={handleCreateUser} />}
                 />
-                {/* Add more routes for the dashboard if needed */}
-                <Redirect to="/dashboard" />{" "}
-                {/* Redirect to the default dashboard route if no other routes match */}
+                <Route exact path="/dashboard/" render={() => <DashboardPage />} />
+                <Redirect to="/404" />
+                {/* Redirect to the dashboard route if no other routes match */}
               </Switch>
             </Dashboard>
           ) : (
-            <Redirect to="/404" />
+            <Redirect to="/" />
           )}
         </Route>
-        <Route path="/404" component={NotFound} />{" "}
-        {/* Render the NotFound component for the 404 page */}
-        <Redirect to="/404" />{" "}
-        {/* Redirect to the 404 page for any other undefined routes */}
+        <Route path="/404" component={NotFound} /> {/* Render the NotFound component for the 404 page */}
+        <Redirect to="/404" /> {/* Redirect to the 404 page for any other undefined pages */}
       </Switch>
       {modalOpen && (
         <Modal

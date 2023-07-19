@@ -1,21 +1,19 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-// import users from "../data/users.json";
-
 const ViewUser = ({ users }) => {
   return (
     <div>
       <h2>View User</h2>
-      <Table striped bordered hover>
+      <Table striped bordered hover respoive>
         <thead>
-          <tr>
+          <tr className="table-primary">
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
             <th>Birth Date</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="table-light">
           {users && users.map((user) => (
             <tr key={user.id}>
               <td>{user.firstName}</td>
@@ -29,5 +27,4 @@ const ViewUser = ({ users }) => {
     </div>
   );
 };
-
 export default ViewUser;

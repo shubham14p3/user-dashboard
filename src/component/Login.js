@@ -7,7 +7,7 @@ const Login = ({ handleLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(username, password);
+    handleLogin(username, password)
   };
 
   return (
@@ -44,9 +44,6 @@ const Login = ({ handleLogin }) => {
               Submit
             </button>
           </div>
-          {/* <p className="forgot-password text-right mt-2">
-            Forgot <a href="#">password?</a>
-          </p> */}
         </div>
       </form>
     </div>

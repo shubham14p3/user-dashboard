@@ -11,7 +11,7 @@ const CustomModal = ({ title, message, onClose }) => {
         <p>{message}</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
+        <Button variant="info" onClick={onClose}>
           Close
         </Button>
       </Modal.Footer>

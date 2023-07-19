@@ -8,6 +8,11 @@ const Dashboard = ({ handleLogout, children }) => {
       <div className="navigation bg-primary">
         <Nav data-bs-theme="dark">
           <NavItem>
+            <Link className="nav-link text-light" to="/dashboard">
+             Dashboard
+            </Link>
+          </NavItem>
+          <NavItem>
             <Link className="nav-link text-light" to="/dashboard/view-user">
               View User
             </Link>
