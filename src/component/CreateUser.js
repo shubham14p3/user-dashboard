@@ -25,6 +25,10 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email address")
     .max(20, "Maximum 20 characters")
+    .matches(
+      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+      "Invalid email address"
+    )
     .required("Email is required"),
   birthDate: Yup.date()
     .max(new Date(), "Birth date cannot be in the future")
@@ -37,7 +41,7 @@ const CreateUser = ({ onCreateUser }) => {
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("");
   const handleSubmit = (values) => {
-    // form validation 
+    // form validation
     // Display success message in a modal popup
     onCreateUser(values);
     setModalMessage(
@@ -136,8 +140,13 @@ const CreateUser = ({ onCreateUser }) => {
                     className="text-danger"
                   />
                 </BootstrapForm.Group>
-                
-                <Button  className="user-register-button" type="submit" variant="primary" disabled={isSubmitting}>
+
+                <Button
+                  className="user-register-button"
+                  type="submit"
+                  variant="primary"
+                  disabled={isSubmitting}
+                >
                   Create
                 </Button>
               </Form>
